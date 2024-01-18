@@ -7,6 +7,7 @@ project(LCD_16x2)
 pico_sdk_init()
 
 add_subdirectory(src)
+include_directories(src)
 
 
 

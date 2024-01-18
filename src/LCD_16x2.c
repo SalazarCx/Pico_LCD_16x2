@@ -4,8 +4,10 @@
 
 // Lcd project library.
 #include "LCD_16x2.h"
+#include "hardware/gpio.h"
+#include "pico/time.h"
 
-void LcdInit(){
+void LcdInit(void){
 
   // Initialise a GPIO.
   gpio_init(RS_PIN); 
@@ -41,8 +43,8 @@ void LcdWriteBits(uint8_t data){
   gpio_put(DB5_PIN, (data & 0x02) != 0);
   gpio_put(DB6_PIN, (data & 0x04) != 0);
   gpio_put(DB7_PIN, (data & 0x08) != 0);
-  gpio_put(EN_PIN, 1);
-  gpio_put(EN_PIN, 0);
+  gpio_put(E_PIN, 1);
+  gpio_put(E_PIN, 0);
 };
 
 void LcdInstructions(uint8_t command){

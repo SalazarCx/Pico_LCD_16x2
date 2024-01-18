@@ -7,6 +7,8 @@
 #define LCD_H_
 
 #include <stdint.h>
+#include "hardware/gpio.h"
+#include "pico/time.h"
 
 // Define the pins.
 #define RS_PIN 5
