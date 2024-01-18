@@ -6,6 +6,8 @@
 
 int main() {
     stdio_init_all();
+    LcdInit();
+    LcdPutChar('o');
     
     while (1) {
     }

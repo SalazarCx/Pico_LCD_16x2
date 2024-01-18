@@ -23,18 +23,37 @@ void LcdInit(){
   gpio_set_dir(DB6_PIN, GPIO_OUT); 
   gpio_set_dir(DB7_PIN, GPIO_OUT); 
 
-  LcdWriteBits();
-
-};
-
-void LcdInstructions(uint8_t command){
-
-};
-
-void LcdPutChar(char character){
-
+  // Initializing by Instruction, 4-bits mode.
+  LcdWriteBits(LCD_INIT);
+  sleep_us(4100);
+  LcdWriteBits(LCD_INIT);
+  sleep_us(100);
+  LcdWriteBits(LCD_INIT);
+  LcdWriteBits(LCD_MOD_4BITS);
+  LcdInstructions(LCD_INTERFACE);
+  LcdInstructions(DISPLAY_OFF);
+  LcdInstructions(DISPLAY_CLEAR);
+  LcdInstructions(LCD_MOD_SET);
 };
 
 void LcdWriteBits(uint8_t data){
-
+  gpio_put(DB4_PIN, (data & 0x01) != 0);
+  gpio_put(DB5_PIN, (data & 0x02) != 0);
+  gpio_put(DB6_PIN, (data & 0x04) != 0);
+  gpio_put(DB7_PIN, (data & 0x08) != 0);
+  gpio_put(EN_PIN, 1);
+  gpio_put(EN_PIN, 0);
 };
+
+void LcdInstructions(uint8_t command){
+  gpio_put(RS_PIN, 0);
+  LcdWriteBits(command >> 4);
+  LcdWriteBits(command & 4);
+};
+
+void LcdPutChar(char character){
+  gpio_put(RS_PIN, 1);
+  LcdWriteBits(character >> 4);
+  LcdWriteBits(character & 4);
+};
+
